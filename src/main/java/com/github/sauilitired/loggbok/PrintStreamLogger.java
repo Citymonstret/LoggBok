@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * {@link SimpleLogger} implementation that writes to a {@link PrintStream}.
  */
-@SuppressWarnings({"WeakerAccess", "unused"}) public class PrintStreamLogger extends SimpleLogger {
+@SuppressWarnings("unused") public class PrintStreamLogger extends SimpleLogger {
 
     private final PrintStream printStream;
 
@@ -30,6 +30,9 @@ import java.time.format.DateTimeFormatter;
     }
 
     @Override public void log(int logLevel, String message, Object... args) {
+        if (this.getLogLevels().getDisplayLevel() < logLevel) {
+            return;
+        }
         printStream.print(getLogFormatted(logLevel, message, args));
     }
 

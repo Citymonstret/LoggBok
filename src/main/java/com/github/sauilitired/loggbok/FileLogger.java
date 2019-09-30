@@ -56,6 +56,9 @@ import java.time.format.DateTimeFormatter;
     }
 
     @Override public void log(int logLevel, String message, Object... args) {
+        if (this.getLogLevels().getDisplayLevel() < logLevel) {
+            return;
+        }
         try {
             final String finalizedMessage = getLogFormatted(logLevel, message, args);
             this.writer.write(finalizedMessage);
