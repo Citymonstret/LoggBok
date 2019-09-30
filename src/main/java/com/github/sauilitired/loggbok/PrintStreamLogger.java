@@ -29,11 +29,11 @@ import java.time.format.DateTimeFormatter;
         this.printStream = printStream;
     }
 
-    @Override public void log(int logLevel, String message, Object... args) {
-        if (this.getLogLevels().getDisplayLevel() < logLevel) {
+    @Override public void log(final LogEntry logEntry) {
+        if (this.getLogLevels().getDisplayLevel() < logEntry.getLevel()) {
             return;
         }
-        printStream.print(getLogFormatted(logLevel, message, args));
+        printStream.print(getLogFormatted(logEntry));
     }
 
     public PrintStream getPrintStream() {

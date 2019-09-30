@@ -1,6 +1,5 @@
 package com.github.sauilitired.loggbok;
 
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @SuppressWarnings({"WeakerAccess", "unused"}) public abstract class SimpleLogger
@@ -27,12 +26,12 @@ import java.time.format.DateTimeFormatter;
         this.dateTimeFormatter = dateTimeFormatter;
     }
 
-    public String getLogFormatted(final int level, final String message, final Object[] args) {
-        return getLogFormat().replace("%level%", this.getLogLevels().getLevel(level))
+    public String getLogFormatted(final LogEntry logEntry) {
+        return getLogFormat().replace("%level%", this.getLogLevels().getLevel(logEntry.getLevel()))
             .replace("%name%", this.getName())
-            .replace("%time%", this.dateTimeFormatter.format(LocalTime.now()))
-            .replace("%thread%", Thread.currentThread().getName())
-            .replace("%message%", String.format(message, args));
+            .replace("%time%", this.dateTimeFormatter.format(logEntry.getTimestamp()))
+            .replace("%thread%", logEntry.getThread().getName())
+            .replace("%message%", String.format(logEntry.getMessage(), logEntry.getArgs()));
     }
 
     public String getName() {

@@ -25,9 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
     @Override public void run() {
         while (!this.thread.isInterrupted() && this.thread.isAlive()) {
-            final LogQueueEntry pendingEntry = getPending();
-            this.internalLogger
-                .log(pendingEntry.getLevel(), pendingEntry.getMessage(), pendingEntry.getArgs());
+            final LogEntry pendingEntry = getPending();
+            this.internalLogger.log(pendingEntry);
         }
     }
 

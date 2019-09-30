@@ -9,14 +9,18 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @SuppressWarnings("WeakerAccess") public abstract class QueueLogger implements Logger {
 
-    private final Queue<LogQueueEntry> logQueueEntries;
+    private final Queue<LogEntry> logQueueEntries;
 
     public QueueLogger() {
         this.logQueueEntries = new LinkedBlockingQueue<>();
     }
 
-    @Override public void log(int logLevel, String message, Object... args) {
-        this.logQueueEntries.add(new LogQueueEntry(logLevel, message, args));
+    @Override public void log(final int logLevel, final String message, final Object... args) {
+        this.logQueueEntries.add(new LogEntry(logLevel, message, args));
+    }
+
+    @Override public void log(final LogEntry logEntry) {
+        this.logQueueEntries.add(logEntry);
     }
 
     /**
@@ -25,38 +29,12 @@ import java.util.concurrent.LinkedBlockingQueue;
      *
      * @return Pending message
      */
-    public LogQueueEntry getPending() {
-        LogQueueEntry entry;
+    public final LogEntry getPending() {
+        LogEntry entry;
         //noinspection StatementWithEmptyBody
         while ((entry = logQueueEntries.poll()) == null)
             ;
         return entry;
-    }
-
-    public static class LogQueueEntry {
-
-        private final int level;
-        private final String message;
-        private final Object[] args;
-
-        private LogQueueEntry(final int level, final String message, final Object[] args) {
-            this.level = level;
-            this.message = message;
-            this.args = args;
-        }
-
-        public int getLevel() {
-            return this.level;
-        }
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public Object[] getArgs() {
-            return this.args;
-        }
-
     }
 
 }

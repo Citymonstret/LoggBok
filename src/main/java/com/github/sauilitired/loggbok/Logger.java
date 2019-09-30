@@ -2,7 +2,11 @@ package com.github.sauilitired.loggbok;
 
 @SuppressWarnings("unused") public interface Logger extends AutoCloseable {
 
-    void log(int logLevel, String message, Object... args);
+    void log(LogEntry logEntry);
+
+    default void log(int logLevel, String message, Object... args) {
+        log(new LogEntry(logLevel, message, args));
+    }
 
     default void info(String message, Object... args) {
         log(LogLevels.LEVEL_INFO, message, args);

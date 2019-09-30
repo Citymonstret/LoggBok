@@ -12,9 +12,9 @@ package com.github.sauilitired.loggbok;
         this.loggers = loggers;
     }
 
-    @Override public void log(int logLevel, String message, Object... args) {
+    @Override public void log(final LogEntry logEntry) {
         for (final Logger logger : this.loggers) {
-            logger.log(logLevel, message, args);
+            logger.log(logEntry);
         }
     }
 

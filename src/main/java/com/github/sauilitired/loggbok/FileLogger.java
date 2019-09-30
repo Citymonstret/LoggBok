@@ -55,12 +55,12 @@ import java.time.format.DateTimeFormatter;
         }
     }
 
-    @Override public void log(int logLevel, String message, Object... args) {
-        if (this.getLogLevels().getDisplayLevel() < logLevel) {
+    @Override public void log(final LogEntry logEntry) {
+        if (this.getLogLevels().getDisplayLevel() < logEntry.getLevel()) {
             return;
         }
         try {
-            final String finalizedMessage = getLogFormatted(logLevel, message, args);
+            final String finalizedMessage = getLogFormatted(logEntry);
             this.writer.write(finalizedMessage);
             if (finalizedMessage.contains("\n") || finalizedMessage.contains("\r")) {
                 this.writer.flush();
