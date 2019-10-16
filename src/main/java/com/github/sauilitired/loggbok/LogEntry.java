@@ -3,7 +3,7 @@ package com.github.sauilitired.loggbok;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
 
-public final class LogEntry {
+public final class LogEntry implements Cloneable {
 
     private int level;
     private String message;
@@ -15,6 +15,16 @@ public final class LogEntry {
         this.level = level;
         this.message = message;
         this.args = args;
+    }
+
+    public LogEntry clone() throws CloneNotSupportedException {
+        final LogEntry logEntry = (LogEntry) super.clone();
+        logEntry.level = this.level;
+        logEntry.message = this.message;
+        logEntry.args = this.args;
+        logEntry.timestamp = this.timestamp;
+        logEntry.threadId = this.threadId;
+        return logEntry;
     }
 
     public int getLevel() {

@@ -14,7 +14,11 @@ package com.github.sauilitired.loggbok;
 
     @Override public void log(final LogEntry logEntry) {
         for (final Logger logger : this.loggers) {
-            logger.log(logEntry);
+            try {
+                logger.log(logEntry.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
