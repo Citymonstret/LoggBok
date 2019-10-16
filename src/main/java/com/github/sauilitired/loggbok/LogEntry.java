@@ -5,11 +5,11 @@ import java.time.temporal.Temporal;
 
 public final class LogEntry {
 
-    private final int level;
-    private final String message;
-    private final Object[] args;
-    private final Temporal timestamp = LocalTime.now();
-    private final Thread thread = Thread.currentThread();
+    private int level;
+    private String message;
+    private Object[] args;
+    private Temporal timestamp = LocalTime.now();
+    private long threadId = Thread.currentThread().getId();
 
     public LogEntry(final int level, final String message, final Object[] args) {
         this.level = level;
@@ -33,8 +33,28 @@ public final class LogEntry {
         return this.timestamp;
     }
 
-    public Thread getThread() {
-        return this.thread;
+    public long getThreadId() {
+        return this.threadId;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
+
+    public void setTimestamp(Temporal timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setThreadId(long threadId) {
+        this.threadId = threadId;
     }
 
 }

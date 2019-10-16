@@ -38,3 +38,24 @@ try (final PrintStreamLogger stdout = new PrintStreamLogger(System.out, logForma
     levelSplitLogger.error("Hello Error!");
 }
 ```
+
+LoggBok also allows you to interact with the Java logging API. This
+can be done either by delegating logging to a Java logger, or by wrapping
+a LoggBok logger in a Java logger, and thus using the Java logging API to log
+to LoggBok. 
+
+```java
+final String logFormat = "[%thread%][%level%][%time%] %message%\n";
+final LogLevels logLevels = new LogLevels();
+try (final PrintStreamLogger stdout = new PrintStreamLogger(System.out, logFormat, logLevels);
+    final PrintStreamLogger stderr = new PrintStreamLogger(System.err, logFormat, logLevels);
+    final LevelSplitLogger levelSplitLogger = new LevelSplitLogger(stdout, logLevels).split(LogLevels.LEVEL_ERROR, stderr);
+    final JavaDelegateLogger javaDelegateLogger = new JavaDelegateLogger(Logger.getLogger("Main"), logFormat, logLevels)) {
+    // Using the java logging API
+    final Logger javaLogger = JavaLogger.wrap(levelSplitLogger);
+    javaLogger.log(Level.INFO, "Hello World!");
+    javaLogger.log(Level.SEVERE, "Hello Error!");
+    // Delegating to the Java logging API
+    javaDelegateLogger.log(LogLevels.LEVEL_INFO, "Hello %s!", "world");
+}
+```

@@ -1,10 +1,13 @@
 package com.github.sauilitired.loggbok;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.time.format.DateTimeFormatter;
 
 @SuppressWarnings({"WeakerAccess", "unused"}) public abstract class SimpleLogger
     implements Logger, AutoCloseable {
 
+    private final ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
     private final String logFormat;
     private final LogLevels logLevels;
     private String name;
@@ -30,7 +33,7 @@ import java.time.format.DateTimeFormatter;
         return getLogFormat().replace("%level%", this.getLogLevels().getLevel(logEntry.getLevel()))
             .replace("%name%", this.getName())
             .replace("%time%", this.dateTimeFormatter.format(logEntry.getTimestamp()))
-            .replace("%thread%", logEntry.getThread().getName())
+            .replace("%thread%", threadMXBean.getThreadInfo(logEntry.getThreadId()).getThreadName())
             .replace("%message%", String.format(logEntry.getMessage(), logEntry.getArgs()));
     }
 
