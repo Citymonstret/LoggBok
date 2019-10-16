@@ -24,3 +24,17 @@ try (final Logger fileLogger = new ThreadedQueueLogger(
     logger.error("Hello Error!");
 }
 ```
+
+There are also other utility wrappers, such as LevelSplitLogger, which
+handles different logging levels using different loggers:
+
+```java
+final String logFormat = "[%thread%][%level%][%time%] %message%\n";
+final LogLevels logLevels = new LogLevels();
+try (final PrintStreamLogger stdout = new PrintStreamLogger(System.out, logFormat, logLevels);
+     final PrintStreamLogger stderr = new PrintStreamLogger(System.err, logFormat, logLevels);
+     final LevelSplitLogger levelSplitLogger = new LevelSplitLogger(stdout, logLevels).split(LogLevels.LEVEL_ERROR, stderr)) {
+    levelSplitLogger.info("Hello World!");
+    levelSplitLogger.error("Hello Error!");
+}
+```

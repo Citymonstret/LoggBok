@@ -69,4 +69,8 @@ package com.github.sauilitired.loggbok;
         return getDisplayLevel();
     }
 
+    public int getLevelCount() {
+        return this.levels.length;
+    }
+
 }
