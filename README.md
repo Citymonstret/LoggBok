@@ -69,7 +69,6 @@ These loggers are currently implemented:
 * PrintStreamLogger: Log to a print stream
 * SplitLogger: Delegate to several different loggers at the same time
 * ThreadedQueueLogger: Asynchronous log delegation
-
-These loggers are planned:
-* ColorLogger: Delegate colourful logs
 * VoidLogger: A logger that screams into the void
+* ColorLogger: Delegate colourful logs
+* ColorStripper: Delegate logger that strips colours
