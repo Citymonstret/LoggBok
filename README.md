@@ -59,3 +59,17 @@ try (final PrintStreamLogger stdout = new PrintStreamLogger(System.out, logForma
     javaDelegateLogger.log(LogLevels.LEVEL_INFO, "Hello %s!", "world");
 }
 ```
+
+These loggers are currently implemented:
+* ConsumerLogger: Log to a Consumer\<LogEntry\>
+* FileLogger: Log to a file
+* JavaDelegateLogger: Log to a Java Logger
+* JavaLogger: Log from a Java Logger
+* LevelSplitLogger: Split log delegation depending on the log level
+* PrintStreamLogger: Log to a print stream
+* SplitLogger: Delegate to several different loggers at the same time
+* ThreadedQueueLogger: Asynchronous log delegation
+
+These loggers are planned:
+* ColorLogger: Delegate colourful logs
+* VoidLogger: A logger that screams into the void
