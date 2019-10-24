@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
     }
 
     @Override public void run() {
-        while (!this.thread.isInterrupted() && this.thread.isAlive()) {
+        while (!Thread.interrupted() && this.thread.isAlive()) {
             final LogEntry pendingEntry = getPending();
             this.internalLogger.log(pendingEntry);
         }
