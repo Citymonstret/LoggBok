@@ -1,5 +1,25 @@
 **W.I.P** Really simple Java logging framework.
 
+### Maven
+[JitPack](https://jitpack.io) is used as the Maven repository for LoggBok.
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+```xml
+<dependency>
+    <groupId>com.github.Sauilitired</groupId>
+    <artifactId>LoggBok</artifactId>
+    <version>1.0-PRE</version>
+</dependency>
+```
+
 ### Example
 
 ```java
