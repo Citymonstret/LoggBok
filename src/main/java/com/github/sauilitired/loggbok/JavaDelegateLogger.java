@@ -18,12 +18,13 @@ public class JavaDelegateLogger extends SimpleLogger {
     }
 
     @Override public void log(final LogEntry logEntry) {
-        final LogRecord logRecord = new LogRecord(getLevel(logEntry.getLevel()),
-            getLogFormatted(logEntry));
-        logRecord.setLoggerName(this.getName());
-        logRecord.setParameters(logEntry.getArgs());
-        logRecord.setThreadID((int) logEntry.getThreadId());
-        this.javaLogger.log(logRecord);
+        if (getLogLevels().isEnabled(logEntry.getLevel())) {
+            final LogRecord logRecord = new LogRecord(getLevel(logEntry.getLevel()), getLogFormatted(logEntry));
+            logRecord.setLoggerName(this.getName());
+            logRecord.setParameters(logEntry.getArgs());
+            logRecord.setThreadID((int) logEntry.getThreadId());
+            this.javaLogger.log(logRecord);
+        }
     }
 
     private static Level getLevel(final int level) {

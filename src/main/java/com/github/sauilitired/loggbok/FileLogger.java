@@ -56,17 +56,16 @@ import java.time.format.DateTimeFormatter;
     }
 
     @Override public void log(final LogEntry logEntry) {
-        if (this.getLogLevels().getDisplayLevel() < logEntry.getLevel()) {
-            return;
-        }
-        try {
-            final String finalizedMessage = getLogFormatted(logEntry);
-            this.writer.write(finalizedMessage);
-            if (finalizedMessage.contains("\n") || finalizedMessage.contains("\r")) {
-                this.writer.flush();
+        if (this.getLogLevels().isEnabled(logEntry.getLevel())) {
+            try {
+                final String finalizedMessage = getLogFormatted(logEntry);
+                this.writer.write(finalizedMessage);
+                if (finalizedMessage.contains("\n") || finalizedMessage.contains("\r")) {
+                    this.writer.flush();
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
             }
-        } catch (final Exception e) {
-            e.printStackTrace();
         }
     }
 

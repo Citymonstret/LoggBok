@@ -30,10 +30,9 @@ import java.time.format.DateTimeFormatter;
     }
 
     @Override public void log(final LogEntry logEntry) {
-        if (this.getLogLevels().getDisplayLevel() < logEntry.getLevel()) {
-            return;
+        if (this.getLogLevels().isEnabled(logEntry.getLevel())) {
+            printStream.print(getLogFormatted(logEntry));
         }
-        printStream.print(getLogFormatted(logEntry));
     }
 
     public PrintStream getPrintStream() {
