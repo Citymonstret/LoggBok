@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
     private final LogLevels logLevels;
     private String name;
     private DateTimeFormatter dateTimeFormatter;
+    private LogFormatter logFormatter = new StandardFormatter();
 
     public SimpleLogger(final String logFormat, final LogLevels logLevels) {
         this(Thread.currentThread().getName(), logFormat, logLevels);
@@ -33,8 +34,8 @@ import java.time.format.DateTimeFormatter;
         return getLogFormat().replace("%level%", this.getLogLevels().getLevel(logEntry.getLevel()))
             .replace("%name%", this.getName())
             .replace("%time%", this.dateTimeFormatter.format(logEntry.getTimestamp()))
-            .replace("%thread%", threadMXBean.getThreadInfo(logEntry.getThreadId()).getThreadName())
-            .replace("%message%", String.format(logEntry.getMessage(), logEntry.getArgs()));
+            .replace("%thread%", this.threadMXBean.getThreadInfo(logEntry.getThreadId()).getThreadName())
+            .replace("%message%", this.logFormatter.format(logEntry));
     }
 
     public String getName() {
@@ -59,6 +60,14 @@ import java.time.format.DateTimeFormatter;
 
     public LogLevels getLogLevels() {
         return this.logLevels;
+    }
+
+    public LogFormatter getLogFormatter() {
+        return this.logFormatter;
+    }
+
+    public void setLogFormatter(final LogFormatter logFormatter) {
+        this.logFormatter = logFormatter;
     }
 
     @Override public final void close() {
